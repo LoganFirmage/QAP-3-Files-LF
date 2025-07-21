@@ -1,0 +1,85 @@
+<!-- Desc: SD 15 QAP 3 - Web Development -->
+<!-- Author: Logan Firmage -->
+<!-- Dates: July 20th, 2025 -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0" />
+
+    <title>Mo's Lawncare Services</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="mainbox">
+      <header></header>
+
+      <h2>Mo's Lawncare Services</h2>
+
+      <form id="lawncareForm">
+        <label>Customer Name: <input type="text" id="name" required></label><br><br>
+        <label>Street Address: <input type="text" id="address" required></label><br><br>
+        <label>City: <input type="text" id="city" required></label><br><br>
+        <label>Phone Number: <input type="text" id="phone" required></label><br><br>
+        <label>Total Square Feet: <input type="number" id="squareFeet" required></label><br><br>
+        <button type="button" onclick="calculateCharges()">Generate Invoice</button>
+      </form>
+
+      <div id="invoiceOutput"></div>
+
+      <script>
+        function calculateCharges() {
+          const name = document.getElementById("name").value;
+          const address = document.getElementById("address").value;
+          const city = document.getElementById("city").value;
+          const phone = document.getElementById("phone").value;
+          const squareFeet = parseFloat(document.getElementById("squareFeet").value);
+
+          const borderSqFt = squareFeet * 0.04;
+          const lawnSqFt = squareFeet * 0.95;
+          const borderCost = borderSqFt * 0.35;
+          const mowingCost = lawnSqFt * 0.07;
+          const fertilizerCost = squareFeet * 0.05;
+
+          const totalCharges = borderCost + mowingCost + fertilizerCost;
+          const hst = totalCharges * 0.15;
+          const envTax = totalCharges * 0.014;
+          const invoiceTotal = totalCharges + hst + envTax;
+
+          const output = `
+          <h2>Invoice</h2>
+          <br>
+
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Address:</strong> ${address}, ${city}</p>
+          <p><strong>Phone:</strong> ${phone}</p>
+          <table>
+            <tr><th>Service</th><th>Details</th><th>Cost ($)</th></tr>
+            <tr><td>Border Trimming</td><td>${borderSqFt.toFixed(2)} sq ft @ $0.35</td><td>${borderCost.tofixed(2)}</td></tr>
+            <tr><td>Lawn Mowing</td><td>${lawnSqFt.tofixed(2)} sq ft @ $0.07</td><td>${mowingCost.toFixed(2)}</td></tr>
+            <tr><td>Fertilizer Treatment</td><td>${squareFeet.toFixed(2)} sq ft @ $0.05</td><td>${fertilizerCost.toFixed(2)}</td></tr>
+            <tr><td colspan="2"><strong>Total Charges</strong></td><td><strong>${totalCharges.toFixed(2)}</strong></td></tr>
+            <tr><td colspan="2">HST (15%)</td><td>${hst.toFixed(2)}</td></tr>
+            <tr><td colspan="2">Environmental Tax (1.4%)</td><td>${envTax.toFixed(2)}</td></tr>
+            <tr><td colspan="2"><strong>Invoice Total</strong></td><td><strong>${invoiceTotal.toFixed(2)}</strong></td></tr>
+          </table>
+        `;
+
+        document.getElementById("invoiceOutput").innerHTML = output;
+        }
+      </script>
+
+    </div>
+
+      <nav></nav>
+
+      <main></main>
+
+      <footer></footer>
+    </div>
+  </body>
+</html>
